@@ -28,13 +28,33 @@ function App() {
   const [summaryData, setSummaryData] = useState({});
 
   const baseUrl = 'https://api.opencovid.ca';
+  
   const getVersion = async () => {
     const res = await fetch(`${baseUrl}/version`);
     const data = await res.json();
     setlastUpdated(data.timeseries);
   };
-  useEffect(() => { getVersion(); }, [activeLocation]);
 
+  const getSummaryData = async () => {
+    if (activeLocation === 'canada') {
+      return;
+    }
+    const res = await fetch(`${baseUrl}/summary?loc${activeLocation}`);
+    const resData = await res.json();
+    const summaryData = resData.data[0];
+    const formattedData = {};
+
+    Object.keys(summaryData).map(
+      (key) => (formattedData[key] = summaryData[key].toLocaleString()),
+    );
+    console.log(formattedData);
+    setSummaryData(formattedData);
+  };
+
+  useEffect(() => {
+    getSummaryData();
+    getVersion();
+  }, [activeLocation]);
   // return statement goes below this
   return (
     <div className="App">
