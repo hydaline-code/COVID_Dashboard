@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Select from 'react-select';
 import './App.css';
+import Card from './SummaryCard';
 
 function App() {
   // App component starts here
@@ -24,6 +25,7 @@ function App() {
 
   const [activeLocation, setActiveLocation] = useState('AB');
   const [lastUpdated, setlastUpdated] = useState(' ');
+  const [summaryData, setSummaryData] = useState({});
 
   const baseUrl = 'https://api.opencovid.ca';
   const getVersion = async () => {
@@ -53,7 +55,12 @@ function App() {
             {lastUpdated}
           </p>
         </div>
-        <div className="dashboard-summary" />
+        <div className="dashboard-summary">
+          <Card title="Total Cases" value={summaryData.cases} />
+          <Card title="Total Tests" value={summaryData.tests_completed} />
+          <Card title="Total Deaths" value={summaryData.deaths} />
+          <Card title="Total Vaccinated" value={summaryData.vaccine_administration_total_doses} />
+        </div>
       </div>
     </div>
   );
