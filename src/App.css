@@ -36,6 +36,7 @@ h1 {
   justify-content:  space-between;
   padding-top: 1em;
 }
+
 .dashboard-laoding {
   size: 2em;
 }
@@ -48,6 +49,8 @@ h1 {
 .dashboard-menu > .update-date {
   margin-right: 2in;
 }
+
+
 .line-chart {
   height: 80%;
 }
