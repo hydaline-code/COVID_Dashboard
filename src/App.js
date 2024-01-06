@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Select from 'react-select';
 import './App.css';
 
@@ -21,9 +21,17 @@ function App() {
   ];
 
   // state to store the active locations
-  /* eslint-disable no-unused-vars */
+
   const [activeLocation, setActiveLocation] = useState('AB');
   const [lastUpdated, setlastUpdated] = useState(' ');
+
+  const baseUrl = 'https://api.opencovid.ca';
+  const getVersion = async () => {
+    const res = await fetch(`${baseUrl}/version`);
+    const data = await res.json();
+    setlastUpdated(data.timeseries);
+  };
+  useEffect(() => { getVersion(); }, [activeLocation]);
 
   // return statement goes below this
   return (
